@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于this</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  
+</body>
+<script>
+  var name = 'a', age = 0, type = 'A'
+  // function fn () {
+  //   console.log( this.name,'年龄是 ', this.age, '血型是 ', this.type );
+  // }
+  // fn()
+  var x = {
+    name: 'XMAN',
+    age: 24,
+    type: this.type,
+    // fn: fn
+  }
+  var y = {
+    name: 'YMAN',
+    age: 25,
+    type: 'B',
+    // fn: fn
+  }
+  
+  // x.fn()
+  // y.fn()
+  // fn.call(y)
+  // fn.apply(y)
+  // fn.bind(y)()
+
+  // arguments
+  // function testArguments() {
+  //   arguments.push('d')
+  //   console.log('arguments :>> ', arguments);
+  //   console.log('arguments.length :>> ', arguments.length);
+  //   console.log(arguments[0])
+  // }
+  // testArguments('a','b','c')
+
+  function todo (para1, para2) {
+    console.log(this.name,'年龄是:', this.age, '血型是:', this.type, '爱好:', para1, para2)
+  }
+  // todo('篮球', '足球')
+  // todo.call(x, '篮球', '足球')
+  // todo.call(x, ['篮球', '足球'])
+  // // todo.apply(x, '篮球', '足球')
+  // todo.apply(x, ['篮球', '足球'])
+  // todo.bind(x, '篮球', '足球')()
+
+  // // for example
+  // function exampleFn1 (para1, para2) {
+  //   todo.apply(y, arguments)
+  // }
+  // exampleFn1('乒乓球')
+  // exampleFn1('乒乓球', '网球')
+
+  function exampleFn2 (fun) {
+    return function () {
+      fun.apply(x, arguments)
+      fun.apply(this, arguments)
+    }
+  }
+  exampleFn2(todo)('乒乓球', '网球')
+  
+  var z = {
+    name: 'ZMAN',
+    age: 26,
+    type: 'AB',
+    fn: exampleFn2(todo)
+  }
+  z.fn('乒乓球', '网球')
+</script>
+</html>
